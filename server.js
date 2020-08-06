@@ -58,7 +58,7 @@ server.get("/api/users", (req, res) => {
 //get by id
 server.get("/api/users/:id", (req, res) => {
     const { id } = req.params;
-    const user = users.find(user => user.id == id);
+    const user = users.find(user => user.id === id);
 
     if(!id) {
         return res.status(500).json({ message: 'The user information could not be retrieved.'})
