@@ -87,6 +87,30 @@ server.delete("/api/users/:id", (req, res) => {
     res.status(200).send(user);
 });
 
+//add new user 
+server.put("/api/users/:id", (req, res) => {
+    const { id } = req.params;
+    const newUserInfo = req.body;
+    const user = users.find(user => user.id === id);
+
+    if(!user){
+        return res.status(404).json({ message: 'The user with the specified ID does not exist.'})
+    }
+
+    if(!newUserInfo.bio || !newUserInfo.name){
+        return res.status(400).json({ error: 'Please provide name and bio for the user'});
+    }
+
+    user.name = newUserInfo.name;
+    user.bio = newUserInfo.bio;
+
+    if(user.name !== newUserInfo.name || user.bio !== newUserInfo.bio) {
+        return res.status(500).json({ errorMessage: 'The user information could not be modified.'});
+    }
+
+    res.status(200).send(user);
+});
+
 //tell the server where to listen 
 server.listen(8000, () => {
     console.log("Server started on port 8000")
