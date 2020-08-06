@@ -6,7 +6,7 @@ const bodyparser = require("body-parser");
 //create a new express server
 const server = express()
 
-//
+//setting up bodyparser
 server.use(bodyparser.json());
 
 //created users
