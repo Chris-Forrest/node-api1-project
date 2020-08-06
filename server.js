@@ -70,6 +70,23 @@ server.get("/api/users/:id", (req, res) => {
     res.status(200).send(user);
 });
 
+//delete request
+server.delete("/api/users/:id", (req, res) => {
+    const { id } = req.params;
+    const user = users.find(user => user.id === id);
+
+    if(!user) {
+        return res.status(404).json({ message: "The user with the specified ID does not exist."})
+    }
+    users = users.filter(user => user.id !== id);
+
+    if (users.find(user => user.id === id)) {
+        return res.status(500).json({ message: "The user could not be removed"});
+    }
+
+    res.status(200).send(user);
+});
+
 //tell the server where to listen 
 server.listen(8000, () => {
     console.log("Server started on port 8000")
